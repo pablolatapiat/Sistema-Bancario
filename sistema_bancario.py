@@ -12,24 +12,32 @@ def depositar():
     global saldo, extrato
     while True:
         try:
-            deposito = float(input("Valor: ").strip())
+            deposito = input("\n[c] Cancelar operação\nValor: ").strip()
+            if deposito == 'c':
+                print("Operação Cancelada!\n")
+                break
+            deposito = float(deposito)
             assert deposito > 0
             saldo += deposito
             extrato += f"+ {locale.currency(deposito)}\n"
             break
         except ValueError:
             print("Valor informado é inválido! Informe um valor numérico e tente novamente...")
-            time.sleep(1)
+            time.sleep(0.5)
         except AssertionError:
             print("Valor informado é inválido! Informe um valor maior que zero e tente novamente...")
-            time.sleep(1)
+            time.sleep(0.5)
 
 def sacar():
     global saldo, num_saques, extrato
     while True:
         if num_saques != LIM_SAQUE_DIARIO:
             try:
-                saque = float(input("Valor: ").strip())
+                saque = input("\n[c] Cancelar operação\nValor: ").strip()
+                if saque == 'c':
+                    print("Operação Cancelada!\n")
+                    break
+                saque = float(saque)
                 assert saque > 0
                 assert saque <= 500
                 if saldo >= saque:
@@ -39,12 +47,13 @@ def sacar():
                     break
                 else:
                     print("Saldo insuficiente para realizar o saque!")
+                    time.sleep(0.5)
             except ValueError:
                 print("Valor informado é inválido! Informe um valor numérico e tente novamente...")
-                time.sleep(1)
+                time.sleep(0.5)
             except AssertionError:
                 print("Valor informado é inválido! Informe um valor maior que zero e tente novamente...") if saque <= 0 else print(f"Limite máximo por saque é de {locale.currency(LIM_SAQUE_OPERACAO)}! Informe um valor menor que o {locale.currency(LIM_SAQUE_OPERACAO)}...")
-                time.sleep(1)
+                time.sleep(0.5)
         else:
             print(f"Limite de saques diários atingido. (MAX: {LIM_SAQUE_DIARIO} por dia)")
             break
