@@ -8,8 +8,8 @@ saldo = 0
 num_saques = 0
 extrato = ""
 
-def depositar():
-    global saldo, extrato
+def depositar(saldo, extrato, /):
+    print(f"SALDO: {saldo}\n EXTRATO: {extrato}")
     while True:
         try:
             deposito = input("\n[c] Cancelar operação\nValor: ").strip()
@@ -27,9 +27,9 @@ def depositar():
         except AssertionError:
             print("Valor informado é inválido! Informe um valor maior que zero e tente novamente...")
             time.sleep(0.5)
+    return saldo, extrato
 
-def sacar():
-    global saldo, num_saques, extrato
+def sacar(*, saldo, num_saques, extrato):
     while True:
         if num_saques != LIM_SAQUE_DIARIO:
             try:
@@ -57,14 +57,15 @@ def sacar():
         else:
             print(f"Limite de saques diários atingido. (MAX: {LIM_SAQUE_DIARIO} por dia)")
             break
+    return saldo, num_saques, extrato
 
-def mostrar_extrato(extrato):
+def mostrar_extrato(saldo, /, extrato):
     print(extrato) if extrato else print("Não foram realizadas movimentações.")
-    print(f"Saldo: {locale.currency(saldo)}")
+    print(f"Saldo: {locale.currency(saldo)}\n")
 
 
 while True:
-    menu = f"""
+    menu_operacoes = f"""
 =-=-=-= MENU =-=-=-=
 |  [d] Depósito    |
 |  [s] Saque [{num_saques}/3] |
@@ -74,18 +75,18 @@ while True:
 Digite uma opção: """
     
     os.system('cls' if os.name == 'nt' else 'clear')
-    opc = input(menu)
+    opc = input(menu_operacoes)
 
     if opc == 'd':
-        depositar()
+        saldo, extrato = depositar(saldo, extrato)
         input("Pressione ENTER para continuar... ")
 
     elif opc == 's':
-        sacar()
+        saldo, num_saques, extrato = sacar(saldo=saldo, num_saques=num_saques, extrato=extrato)
         input("Pressione ENTER para continuar... ")
 
     elif opc == 'e':
-        mostrar_extrato(extrato)
+        mostrar_extrato(saldo, extrato=extrato)
         input("Pressione ENTER para continuar... ")
 
     elif opc == 'q':
