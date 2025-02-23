@@ -88,15 +88,15 @@ Digite uma opção: """
         saldo, extrato = depositar(saldo, extrato)
         input("Pressione ENTER para continuar... ")
 
-    elif opc == 'sS':
+    elif opc in 'sS':
         saldo, num_saques, extrato = sacar(saldo=saldo, num_saques=num_saques, extrato=extrato)
         input("Pressione ENTER para continuar... ")
 
-    elif opc == 'eE':
+    elif opc in 'eE':
         mostrar_extrato(saldo, extrato=extrato)
         input("Pressione ENTER para continuar... ")
 
-    elif opc == 'qQ':
+    elif opc in 'qQ':
         print("Volte sempre !!!")
         break
 
