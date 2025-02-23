@@ -9,7 +9,6 @@ num_saques = 0
 extrato = ""
 
 def depositar(saldo, extrato, /):
-    print(f"SALDO: {saldo}\n EXTRATO: {extrato}")
     while True:
         try:
             deposito = input("\n[c] Cancelar operação\nValor: ").strip()
@@ -67,29 +66,37 @@ def mostrar_extrato(saldo, /, extrato):
 while True:
     menu_operacoes = f"""
 =-=-=-= MENU =-=-=-=
-|  [d] Depósito    |
-|  [s] Saque [{num_saques}/3] |
-|  [e] Extrato     |
-|  [q] Sair        |
+|  [D] Depósito    |
+|  [S] Saque [{num_saques}/3] |
+|  [E] Extrato     |
+|  [Q] Sair        |
 --------------------
 Digite uma opção: """
+
+    menu_contas = f"""
+=-=-=-=-= BEM-VINDO =-=-=-=-=
+|  [C] Cadastrar Usuário
+|  [E] Entrar em uma conta
+|  [L] Listar 
+|  [Q] Sair
+"""
     
     os.system('cls' if os.name == 'nt' else 'clear')
     opc = input(menu_operacoes)
 
-    if opc == 'd':
+    if opc in 'dD':
         saldo, extrato = depositar(saldo, extrato)
         input("Pressione ENTER para continuar... ")
 
-    elif opc == 's':
+    elif opc == 'sS':
         saldo, num_saques, extrato = sacar(saldo=saldo, num_saques=num_saques, extrato=extrato)
         input("Pressione ENTER para continuar... ")
 
-    elif opc == 'e':
+    elif opc == 'eE':
         mostrar_extrato(saldo, extrato=extrato)
         input("Pressione ENTER para continuar... ")
 
-    elif opc == 'q':
+    elif opc == 'qQ':
         print("Volte sempre !!!")
         break
 
